@@ -4,7 +4,7 @@ const { createRequest,getAllRequests } = require('../../controllers/requestContr
 
 router.post('/', createRequest);
 
-router.get('/', getAllRequests);
+router.get('/allrequests', getAllRequests);
 
 
 
