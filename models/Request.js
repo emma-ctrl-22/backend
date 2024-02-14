@@ -7,13 +7,13 @@ const requestSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        required: true,
+        default: "Plastic",
         enum: ["Plastic", "Paper", "Glass", "Metal", "Other"]
     },
     status: {
         type: String,
-        required: true,
-        enum: ["Pending", "completed"]
+        enum: ["Pending", "completed"],
+        default: "Pending"
     },
     lat:{
         type: Number,
@@ -21,6 +21,10 @@ const requestSchema = new mongoose.Schema({
     },  
     long:{
         type: Number,
+        required: true
+    },
+    PlaceName:{
+        type: String,
         required: true
     },
     
