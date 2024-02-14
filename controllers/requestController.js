@@ -17,4 +17,14 @@ const createRequest = async (req, res) => {
     }
 };
 
-module.exports = { createRequest };
+const getAllRequests = async (req, res) => {
+    try {
+        const requests = await Request.find();
+        res.status(200).json(requests);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+
+}
+
+module.exports = { createRequest, getAllRequests };
