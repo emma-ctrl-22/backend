@@ -25,7 +25,7 @@ const requestSchema = new mongoose.Schema({
     },
     PlaceName:{
         type: String,
-        required: true
+       
     },
     
 },
