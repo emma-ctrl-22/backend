@@ -27,4 +27,23 @@ const getAllRequests = async (req, res) => {
 
 }
 
+const PlasticRequest = async (req, res) => {
+    try {
+        const requests = await Request.find({ type: "Plastic" });
+        res.status(200).json(requests);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+
+};
+
+const PaperRequest = async (req, res) => {
+    try {
+        const requests = await Request.find({ type: "Paper" });
+        res.status(200).json(requests);
+        } catch (err) {
+        res.status(500).json(err);
+    }
+}
+
 module.exports = { createRequest, getAllRequests };
