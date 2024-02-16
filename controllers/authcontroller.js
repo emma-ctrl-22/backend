@@ -22,7 +22,7 @@ const handleNewUser = async (req, res) => {
 
 const handleLogin = async (req, res) => {
     try {
-        const user = await User.findOne({ username: req.body.username });
+        const user = await User.findOne({ username: req.body.email });
         !user && res.status(400).json("Wrong username or password");
 
         const validated = await bcrypt.compare(req.body.password, user.password);
