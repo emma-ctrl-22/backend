@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const handleNewUser = async (req, res) => { 
     try {
@@ -22,13 +23,24 @@ const handleNewUser = async (req, res) => {
 
 const handleLogin = async (req, res) => {
     try {
-        const user = await User.findOne({ username: req.body.email });
-        !user && res.status(400).json("Wrong username or password");
+        const user = await User.findOne({ email: req.body.email }); // Assuming you use email to find the user
+        if (!user) {
+            return res.status(400).json("Wrong email or password");
+        }
 
         const validated = await bcrypt.compare(req.body.password, user.password);
-        !validated && res.status(400).json("Wrong username or password");
+        if (!validated) {
+            return res.status(400).json("Wrong email or password");
+        }
 
-        res.status(200).json({ _id: user._id, username: user.username });
+        // Create JWT token
+        const token = jwt.sign(
+            { username: user.username, role: user.role ,phone: user.phone}, 
+            process.env.JWT_SECRET, // Use an environment variable for the secret key
+            { expiresIn: '1h' } // Token expires in 1 hour
+        );
+
+        res.status(200).json({ token });
     } catch (err) {
         res.status(500).json(err);
     }
