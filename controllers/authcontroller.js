@@ -54,4 +54,8 @@ const handleLogin = async (req, res) => {
     }
 };
 
-module.exports = { handleNewUser, handleLogin };
+const handleTokens = async ( req , res )=>{
+   return res.json({username:req.username,phone:req.phone})
+}
+
+module.exports = { handleNewUser, handleLogin , handleTokens };
