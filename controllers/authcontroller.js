@@ -1,11 +1,15 @@
 const User = require('../models/User')
 const express = require('express');
+const app = express()
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 dotenv.config();
+
+app.use(express.json())
+app.use(cookieParser())
 
 
 const handleNewUser = async (req, res) => { 

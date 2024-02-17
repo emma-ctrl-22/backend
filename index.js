@@ -7,6 +7,7 @@ dotenv.config();
 const authRoute = require('./routes/api/auth');
 const requestRoute = require('./routes/api/request');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 app.use(express.json());
 app.use(cors({
@@ -14,6 +15,7 @@ app.use(cors({
     credentials : true
 } 
 ));
+app.use(cookieParser())
 
 mongoose.connect(process.env.MONGO_URL).then(console.log('Connected to MongoDB')).catch(err => console.log(err));
 
