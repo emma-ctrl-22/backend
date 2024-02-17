@@ -1,6 +1,8 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const handleNewUser = async (req, res) => { 
     try {
@@ -33,11 +35,16 @@ const handleLogin = async (req, res) => {
             return res.status(400).json("Wrong password");
         }
         else{
-            const accessToken = jwt.sign({ username: user.username, role: user.role,phone: user.phone }, process.env.JWT_SECRET);
-            res.status(200).json({ accessToken: accessToken, user: user });
-        }
+            const accessToken = jwt.sign({ username: user.username, role: user.role,phone: user.phone },
+                 process.env.JWT_SECRET,{ expiresIn: '15m' });
 
-        // Create JWT token
+            const refreshToken = jwt.sign({ username: user.username, role: user.role,phone: user.phone },
+                process.env.JWT_SECRET,{ expiresIn: '1d' });
+           
+            res.cookie('refreshToken', refreshToken, {maxAge: 36000, httpOnly: true, secure: true, sameSite: 'strict'});
+            res.cookie('accessToken', accessToken, {maxAge: 900000, httpOnly: true, secure: true, sameSite: 'strict'});
+            res.json("Login Succesful")
+        }
     } catch (err) {
         res.status(500).json(err);
     }
