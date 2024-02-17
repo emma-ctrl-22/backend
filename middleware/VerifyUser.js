@@ -13,7 +13,7 @@ const verifyUser = (req, res, next) => {
   if (!token) {
     return res.status(401).json("You need to Login");
   }else{
-    jwt.verify(accessToken,process.env.JWT_SECRET,(err,decoded)=>{
+    jwt.verify(token,process.env.JWT_SECRET,(err,decoded)=>{
         if(err){
             return res.json("token is wrong")
         }else{

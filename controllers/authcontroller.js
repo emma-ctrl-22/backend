@@ -44,13 +44,13 @@ const handleLogin = async (req, res) => {
         }
         else{
             const accessToken = jwt.sign({ username: user.username, role: user.role,phone: user.phone },
-                 process.env.JWT_SECRET,{ expiresIn: '15m' });
+                 process.env.JWT_SECRET,{ expiresIn: '1d' });
 
             const refreshToken = jwt.sign({ username: user.username, role: user.role,phone: user.phone },
                 process.env.JWT_SECRET,{ expiresIn: '1d' });
            
-            res.cookie('refreshToken', refreshToken, {maxAge: 36000, httpOnly: true, secure: true, sameSite: 'strict'});
-            res.cookie('accessToken', accessToken, {maxAge: 900000, httpOnly: true, secure: true, sameSite: 'strict'});
+            res.cookie('refreshToken', refreshToken, {maxAge: 3600000, httpOnly: true, secure: true, sameSite: 'strict'});
+            res.cookie('accessToken', accessToken, {maxAge: 90000000, httpOnly: true, secure: true, sameSite: 'strict'});
             res.json({ status: 200, role: user.role });
         }
     } catch (err) {
