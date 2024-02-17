@@ -20,7 +20,7 @@ app.use(cookieParser())
 mongoose.connect(process.env.MONGO_URL).then(console.log('Connected to MongoDB')).catch(err => console.log(err));
 
 app.use('/verifyuser',verifyUser, (req,res)=>{
-    res.json({username: req.username, phone: req.phone});
+    res.json({username: req.username, phone: req.phone, role: req.role, user_id: req.user_id});
 });
 
 app.use('/api/auth', authRoute);

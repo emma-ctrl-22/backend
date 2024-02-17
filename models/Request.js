@@ -23,10 +23,14 @@ const requestSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    PlaceName:{
+    TakenBy: {
         type: String,
-       
+        default: ""
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
     
 },
 {timestamps: true}

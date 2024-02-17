@@ -19,6 +19,8 @@ const verifyUser = (req, res, next) => {
         }else{
             req.username = decoded.username;
             req.phone = decoded.phone;
+            req.role = decoded.role;
+            req.user_id = decoded.user_id;
             next()
         }
     })
