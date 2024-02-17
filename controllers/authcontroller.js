@@ -43,10 +43,10 @@ const handleLogin = async (req, res) => {
             return res.status(400).json("Wrong password");
         }
         else{
-            const accessToken = jwt.sign({ username: user.username, role: user.role,phone: user.phone,user_id:user._id },
+            const accessToken = jwt.sign({ username: user.username, role: user.role,phone: user.phone,user_id:user.user_id },
                  process.env.JWT_SECRET,{ expiresIn: '1m' });
 
-            const refreshToken = jwt.sign({ username: user.username, role: user.role,phone: user.phone ,user_id:user._id},
+            const refreshToken = jwt.sign({ username: user.username, role: user.role,phone: user.phone ,user_id:user.user_id },
                 process.env.JWT_SECRET,{ expiresIn: '1d' });
            
             res.cookie('refreshToken', refreshToken, {maxAge: 36000, httpOnly: true, secure: true, sameSite: 'same-site'});
@@ -59,7 +59,7 @@ const handleLogin = async (req, res) => {
 };
 
 const handleTokens = async ( req , res )=>{
-   return res.json({username:req.username,phone:req.phone,role:req.role,user_id:req.user_id})
+   return res.json({username:req.username,phone:req.phone,role:req.role, user_id:req.user_id })
 }
 
 module.exports = { handleNewUser, handleLogin , handleTokens };
