@@ -1,8 +1,12 @@
 const User = require('../models/User')
+const express = require('express');
 const bcrypt = require('bcrypt');
+const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
 dotenv.config();
+
 
 const handleNewUser = async (req, res) => { 
     try {
@@ -43,7 +47,7 @@ const handleLogin = async (req, res) => {
            
             res.cookie('refreshToken', refreshToken, {maxAge: 36000, httpOnly: true, secure: true, sameSite: 'strict'});
             res.cookie('accessToken', accessToken, {maxAge: 900000, httpOnly: true, secure: true, sameSite: 'strict'});
-            res.json("Login Succesful")
+            res.json({ status: 200, role: user.role });
         }
     } catch (err) {
         res.status(500).json(err);
