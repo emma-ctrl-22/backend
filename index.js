@@ -10,12 +10,12 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const {verifyUser} = require('./middleware/VerifyUser');
 app.use(express.json());
+app.use(cookieParser())
 app.use(cors({
-    origin:['http://localhost:3000'],
+    origin:'http://localhost:3000',
     credentials : true
 } 
 ));
-app.use(cookieParser())
 
 mongoose.connect(process.env.MONGO_URL).then(console.log('Connected to MongoDB')).catch(err => console.log(err));
 
