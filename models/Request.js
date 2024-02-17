@@ -28,10 +28,9 @@ const requestSchema = new mongoose.Schema({
         default: ""
     },
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        type: String,
+        
     }
-    
 },
 {timestamps: true}
 );

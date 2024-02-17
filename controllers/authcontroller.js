@@ -31,35 +31,10 @@ const handleNewUser = async (req, res) => {
     }
 };
 
-const handleLogin = async (req, res) => {
-    try {
-        const user = await User.findOne({ email: req.body.email }); // Assuming you use email to find the user
-        if (!user) {
-            return res.status(400).json("Wrong email");
-        }
 
-        const validated = await bcrypt.compare(req.body.password, user.password);
-        if (!validated) {
-            return res.status(400).json("Wrong password");
-        }
-        else{
-            const accessToken = jwt.sign({ username: user.username, role: user.role,phone: user.phone,user_id:user.user_id },
-                 process.env.JWT_SECRET,{ expiresIn: '1m' });
 
-            const refreshToken = jwt.sign({ username: user.username, role: user.role,phone: user.phone ,user_id:user.user_id },
-                process.env.JWT_SECRET,{ expiresIn: '1d' });
-           
-            res.cookie('refreshToken', refreshToken, {maxAge: 36000, httpOnly: true, secure: true, sameSite: 'same-site'});
-            res.cookie('accessToken', accessToken, {maxAge: 900000, httpOnly: true, secure: true, sameSite: 'same-site'});
-            res.json({ status: 200, role: user.role });
-        }
-    } catch (err) {
-        res.status(500).json(err);
-    }
-};
-
-const handleTokens = async ( req , res )=>{
+{/*const handleTokens = async ( req , res )=>{
    return res.json({username:req.username,phone:req.phone,role:req.role, user_id:req.user_id })
-}
+}*/}
 
 module.exports = { handleNewUser, handleLogin , handleTokens };
