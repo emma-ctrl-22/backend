@@ -25,22 +25,19 @@ const handleLogin = async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email }); // Assuming you use email to find the user
         if (!user) {
-            return res.status(400).json("Wrong email or password");
+            return res.status(400).json("Wrong email");
         }
 
         const validated = await bcrypt.compare(req.body.password, user.password);
         if (!validated) {
-            return res.status(400).json("Wrong email or password");
+            return res.status(400).json("Wrong password");
+        }
+        else{
+            const accessToken = jwt.sign({ username: user.username, role: user.role,phone: user.phone }, process.env.JWT_SECRET);
+            res.status(200).json({ accessToken: accessToken, user: user });
         }
 
         // Create JWT token
-        const token = jwt.sign(
-            { username: user.username, role: user.role ,phone: user.phone}, 
-            process.env.JWT_SECRET, // Use an environment variable for the secret key
-            { expiresIn: '1h' } // Token expires in 1 hour
-        );
-
-        res.status(200).json({ token });
     } catch (err) {
         res.status(500).json(err);
     }
