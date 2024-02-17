@@ -7,7 +7,8 @@ const createRequest = async (req, res) => {
             type: req.body.type,
             status: req.body.status,
             lat: req.body.lat,
-            long: req.body.long
+            long: req.body.long,
+            user_id: req.body.user_id
         });
 
         const request = await newRequest.save();
@@ -48,8 +49,8 @@ const PaperRequest = async (req, res) => {
 
 const SpecificRequest = async (req, res) => {
     try {
-        const user_id = req.params.user_id;
-        const requests = await Request.find({ user_id: user_id });
+        const userId = req.body;
+        const requests = await Request.find({ user_id: userId });
         res.status(200).json(requests);
     } catch (err) {
         res.status(500).json({ message: err.message });

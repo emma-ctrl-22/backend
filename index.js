@@ -27,6 +27,15 @@ app.use('/api/auth', authRoute);
 
 app.use('/api/request', requestRoute);
 
+app.post('/sepcific',async (req, res) => {
+    try {
+        const {user_id} = req.body;
+        const requests = await Request.find({ user_id: user_id });
+        res.status(200).json(requests);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 

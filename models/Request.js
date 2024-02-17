@@ -27,9 +27,8 @@ const requestSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
-    userId: {
+    user_id: {
         type: String,
-        
     }
 },
 {timestamps: true}
