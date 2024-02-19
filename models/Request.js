@@ -21,15 +21,10 @@ const requestSchema = new mongoose.Schema({
     },
     TakenBy: {
         type: String,
-        default: ""
-    },
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    }
+        default: "anyone"
+    }  ,  
 },
 {timestamps: true}
 );
 
-module.exports = mongoose.model("Request", requestSchema);
+module.exports = mongoose.model("RequestTable", requestSchema);

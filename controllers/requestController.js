@@ -6,18 +6,18 @@ dotenv.config();
 const createRequest = async (req, res) => {
     try {
         const newRequest = new Request({
-            username: req.body.username,
             type: req.body.type,
             status: req.body.status,
             lat: req.body.lat,
             long: req.body.long,
-            user_id: req.body.user_id
+            number: req.body.number,
         });
 
         const request = await newRequest.save();
         res.status(200).json(request);
     } catch (err) {
-        res.status(500).json(err);
+        console.error(err); // Log the error to see more details
+    res.status(500).json({ message: err.message });
     }
 };
 
