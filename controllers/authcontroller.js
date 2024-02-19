@@ -43,10 +43,15 @@ const handleLogin = async (req, res) => {
         if (!isValidPassword) {
             return res.status(403).json({ message: "Invalid email or password" });
         }
+        res.status(200).json({
+            username: user.username,
+            _id: user._id,
+            // Include any other user info you want to send
+        });
 
-        const token = jwt.sign({ username: user.username, phone: user.phone, role: user.role, user_id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
-        res.cookie("accessToken", token, { httpOnly: true });
-        res.status(200).json({ message: "success" });
+        //const token = jwt.sign({ username: user.username, phone: user.phone, role: user.role, user_id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+       // res.cookie("accessToken", token, { httpOnly: true });
+       // res.status(200).json({ message: "success" });
     } catch (err) {
         res.status(500).json({ message: "An error occurred" });
     }

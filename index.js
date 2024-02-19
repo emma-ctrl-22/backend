@@ -28,14 +28,14 @@ app.use('/api/auth', authRoute);
 
 app.use('/api/request', requestRoute);
 
-app.get('/specific/:userId', async(req, res) => {
+app.get('/requests/:userId',verifyUser, async (req, res) => {
     try {
-        const userId = req.params.userId; // Access user_id sent as URL parameter
-        const requests = await Request.find({ user_id: userId });
+        const userId = req.params.userId;
+        const requests = await Request.find({ user: userId }).populate('users');
         res.status(200).json(requests);
-      } catch (err) {
+    } catch (err) {
         res.status(500).json({ message: err.message });
-      }
+    }
 });
 
 {/*app.post('/sepcific',async (req, res) => {
