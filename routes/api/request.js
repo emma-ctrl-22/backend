@@ -7,7 +7,7 @@ router.post('/', createRequest);
 
 router.get('/allrequests', getAllRequests);
 
-router.post('/specific', SpecificRequest);
+router.get('/specific/', SpecificRequest);
 
 
 

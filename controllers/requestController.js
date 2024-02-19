@@ -1,4 +1,7 @@
 const Request = require('../models/Request');
+const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv');
+dotenv.config();
 
 const createRequest = async (req, res) => {
     try {
@@ -49,7 +52,7 @@ const PaperRequest = async (req, res) => {
 
 const SpecificRequest = async (req, res) => {
     try {
-        const userId = req.body;
+        const userId = req.params.userId; // Access user_id sent as URL parameter
         const requests = await Request.find({ user_id: userId });
         res.status(200).json(requests);
     } catch (err) {

@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 const PORT = process.env.PORT || 5000;
 dotenv.config();
+const Request= require('./models/Request');
 const authRoute = require('./routes/api/auth');
 const requestRoute = require('./routes/api/request');
 const cors = require('cors');
@@ -12,7 +13,7 @@ const {verifyUser} = require('./middleware/VerifyUser');
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({
-    origin:'http://localhost:3000',
+    origin:['http://localhost:3000','http://191.168.2.230:8081'],
     credentials : true
 } 
 ));
@@ -27,7 +28,17 @@ app.use('/api/auth', authRoute);
 
 app.use('/api/request', requestRoute);
 
-app.post('/sepcific',async (req, res) => {
+app.get('/specific/:userId', async(req, res) => {
+    try {
+        const userId = req.params.userId; // Access user_id sent as URL parameter
+        const requests = await Request.find({ user_id: userId });
+        res.status(200).json(requests);
+      } catch (err) {
+        res.status(500).json({ message: err.message });
+      }
+});
+
+{/*app.post('/sepcific',async (req, res) => {
     try {
         const {user_id} = req.body;
         const requests = await Request.find({ user_id: user_id });
@@ -35,7 +46,7 @@ app.post('/sepcific',async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
-});
+});*/}
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
