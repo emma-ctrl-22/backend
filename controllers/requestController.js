@@ -50,13 +50,18 @@ const PaperRequest = async (req, res) => {
     }
 }
 
-const SpecificRequest = async (req, res) => {
+ const History = async (req,res) =>{
     try {
-        const userId = req.params.userId; // Access user_id sent as URL parameter
-        const requests = await Request.find({ user_id: userId });
+        const author = req.query.author;
+        if (!author) {
+            return res.status(400).json({ message: 'Author query parameter is required' });
+        }
+
+        const requests = await Request.find({ author: author });
         res.status(200).json(requests);
-    } catch (err) {
+    } catch (error) {
+        console.error(err);
         res.status(500).json({ message: err.message });
     }
-};
-module.exports = { createRequest, getAllRequests,SpecificRequest };
+ }
+module.exports = { createRequest, getAllRequests,History };
