@@ -48,10 +48,18 @@ const handleLogin = async (req, res) => {
             //_id: user._id,
             // Include any other user info you want to send
         //});
-
-        const token = jwt.sign({ username: user.username, phone: user.phone, role: user.role, user_id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
-        res.cookie("accessToken", token, { httpOnly: true });
-        res.status(200).json({ message: "success" });
+        if(isValidPassword) {
+            const token = jwt.sign({ username: user.username, phone: user.phone, role: user.role,}, process.env.JWT_SECRET, { expiresIn: "1d" });
+            if(res.status(201)){
+                return res.status(200).json({ message: "token sent successful", token: token,
+                username: user.username, // Include the username in the response
+                role: user.role ,
+                email:user.email
+            });
+            }else{
+                return res.status(403).json({ message: "error sending token" });
+            }
+        }
     } catch (err) {
         res.status(500).json({ message: "An error occurred" });
     }

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const PORT = process.env.PORT || 5000;
 dotenv.config();
 const Request= require('./models/Request');
+const User = require('./models/User');
 const authRoute = require('./routes/api/auth');
 const requestRoute = require('./routes/api/request');
 const cors = require('cors');
@@ -28,7 +29,7 @@ app.use('/api/auth', authRoute);
 
 app.use('/api/request', requestRoute);
 
-app.get('/requests/:userId',verifyUser, async (req, res) => {
+app.get('/requests/', async (req, res) => {
     try {
         const userId = req.params.userId;
         const requests = await Request.find({ user: userId }).populate('users');
@@ -37,6 +38,21 @@ app.get('/requests/:userId',verifyUser, async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
+app.post('/userData', async (req, res) => {
+    const {token}=req.body;
+    try {
+        const user = jwt.verify(token,process.env.JWT_SECRET);
+        useremail = user.email;
+    
+        User.findOne({email:useremail}).then((data)=>{ 
+            res.send({status:"ok",data:data})
+        })
+    } catch (error) {
+        
+    }
+   
+})
 
 {/*app.post('/sepcific',async (req, res) => {
     try {
