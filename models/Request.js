@@ -22,7 +22,10 @@ const requestSchema = new mongoose.Schema({
     TakenBy: {
         type: String,
         default: "anyone"
-    }  ,  
+    }  ,
+    author:{
+        type:String
+    }
 },
 {timestamps: true}
 );
