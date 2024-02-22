@@ -22,6 +22,20 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "user",
         enum: ["user", "admin","driver"]
+    },
+    companyName:{
+        type : String,
+        default:""
+    },
+    comLocation:{
+        lat: { type: Number,
+        default:"" },
+        long: { type: Number,
+        default:"" }
+    },
+    comAssociate:{
+        type: String,
+        default:""
     }
     },{timestamps: true}
 );
