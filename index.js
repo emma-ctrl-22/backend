@@ -29,7 +29,7 @@ app.use('/api/auth', authRoute);
 
 app.use('/api/request', requestRoute);
 
-app.get('/requests/', async (req, res) => {
+{/*app.get('/requests/', async (req, res) => {
     try {
         const userId = req.params.userId;
         const requests = await Request.find({ user: userId }).populate('users');
@@ -38,7 +38,7 @@ app.get('/requests/', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
-
+*/}
 app.post('/userData', async (req, res) => {
     const {token}=req.body;
     try {
