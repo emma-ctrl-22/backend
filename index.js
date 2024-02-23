@@ -15,7 +15,7 @@ const {verifyUser} = require('./middleware/VerifyUser');
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({
-    origin:['http://localhost:3000','http://172.20.10.5:8081'],
+    origin:['http://localhost:3000','http://172.20.10.5:8081','http://172.20.10.6:3000'],
     credentials : true
 } 
 ));
