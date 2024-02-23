@@ -4,8 +4,6 @@ const Request = require('../../models/Request');
 
 const {getDrivers} = require('../../controllers/driverController');
 
-router.get('/', getDrivers);
-
-
+router.post('/', getDrivers);
 
 module.exports = router;
