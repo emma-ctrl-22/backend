@@ -1,4 +1,5 @@
 const Request = require('../models/Request');
+const User = require('../models/User');
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv');
 dotenv.config();
@@ -50,7 +51,7 @@ const PaperRequest = async (req, res) => {
     }
 }
 
- const History = async (req,res) =>{
+const History = async (req,res) =>{
     try {
         const author = req.query.author;
         if (!author) {
@@ -63,5 +64,9 @@ const PaperRequest = async (req, res) => {
         console.error(err);
         res.status(500).json({ message: err.message });
     }
- }
+}
+
+
+
+
 module.exports = { createRequest, getAllRequests,History };
