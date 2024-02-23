@@ -1,9 +1,12 @@
-const router = require('express').Router();
+const express = require('express');
+const router = express.Router();
 const User = require('../../models/User');
 const Request = require('../../models/Request');
 
-const {getDrivers} = require('../../controllers/driverController');
-
+const { getDrivers,StatusChanger } = require('../../controllers/driverController');
+ 
 router.post('/', getDrivers);
+
+router.post('/status', StatusChanger);
 
 module.exports = router;

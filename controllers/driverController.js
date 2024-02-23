@@ -19,7 +19,28 @@ const getDrivers = async (req, res) => {
     } catch (err) {
         res.status(500).json(err);
     }
+};
+
+const StatusChanger = async (req, res) => {
+    const requestId = req.body.requestId;
+
+    try {
+        // Find the request by _id and update its status
+        const updatedRequest = await Request.findOneAndUpdate(
+            { _id: requestId },
+            { status: 'completed' },
+            { new: true } // This option returns the updated document
+        );
+
+        if (!updatedRequest) {
+            return res.status(404).json({ message: 'Request not found' });
+        }
+
+        res.status(200).json(updatedRequest);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 
-module.exports = { getDrivers };
+module.exports = { getDrivers , StatusChanger };
