@@ -21,7 +21,8 @@ const handleNewUser = async (req, res) => {
             email: req.body.email,
             password: hashedPassword,
             phone: req.body.phone,
-            role: req.body.role
+            role: req.body.role,
+            comAssociate:req.body.comAssociate,
         });
 
         const user = await newUser.save();
