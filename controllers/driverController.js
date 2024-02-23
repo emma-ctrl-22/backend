@@ -4,13 +4,22 @@ const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv');
 dotenv.config();
 
-const getDriversCount = async (req, res) => {
+const getDrivers = async (req, res) => {
     try {
-        const driverCount = await User.countDocuments({ role: "driver" });
-        res.status(200).json({ count: driverCount });
+        // Extract comAssociate from request body
+        const { comAssociate } = req.body;
+
+        // Find drivers that match the role and comAssociate
+        const drivers = await User.find({ 
+            role: "driver",
+            comAssociate: comAssociate  // Assuming comAssociate is a field in your User model
+        });
+
+        res.status(200).json(drivers);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).json(err);
     }
 }
 
-module.exports = { getDriversCount };
+
+module.exports = { getDrivers };

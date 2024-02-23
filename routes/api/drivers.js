@@ -2,9 +2,9 @@ const router = require('express').Router();
 const User = require('../../models/User');
 const Request = require('../../models/Request');
 
-const {getDriversCount} = require('../../controllers/driverController');
+const {getDrivers} = require('../../controllers/driverController');
 
-router.post('/', getDriversCount);
+router.get('/', getDrivers);
 
 
 

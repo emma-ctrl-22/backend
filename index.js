@@ -8,6 +8,7 @@ const Request= require('./models/Request');
 const User = require('./models/User');
 const authRoute = require('./routes/api/auth');
 const requestRoute = require('./routes/api/request');
+const driverRoute = require("./routes/api/drivers");
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const {verifyUser} = require('./middleware/VerifyUser');
@@ -28,6 +29,8 @@ app.use('/verifyuser',verifyUser, (req,res)=>{
 app.use('/api/auth', authRoute);
 
 app.use('/api/request', requestRoute);
+
+app.use('/api/drivers', driverRoute);
 
 {/*app.get('/requests/', async (req, res) => {
     try {
