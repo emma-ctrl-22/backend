@@ -40,7 +40,16 @@ const StatusChanger = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-}
+};
+
+const getAllCompanies = async (req, res) => {
+    try {
+        const companies = await User.find({ role: 'admin' });
+        res.status(200).json(companies);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 
-module.exports = { getDrivers , StatusChanger };
+module.exports = { getDrivers , StatusChanger,getAllCompanies };
