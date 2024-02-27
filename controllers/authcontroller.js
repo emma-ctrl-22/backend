@@ -56,7 +56,8 @@ const handleLogin = async (req, res) => {
                 return res.status(200).json({ message: "token sent successful", token: token,
                 username: user.username, // Include the username in the response
                 role: user.role ,
-                email:user.email
+                email:user.email,
+                phone: user.phone
             });
             }else{
                 return res.status(403).json({ message: "error sending token" });
