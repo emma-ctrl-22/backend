@@ -36,8 +36,14 @@ const userSchema = new mongoose.Schema({
     comAssociate:{
         type: String,
         default:""
+    },
+    comLocation:{
+        lat: { type: Number,
+        default:"2.5847464" },
+        long: { type: Number,
+        default:"1.56783934" }
     }
-    },{timestamps: true}
+},{timestamps: true}
 );
 
 module.exports = mongoose.model("newUser", userSchema);
