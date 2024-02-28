@@ -56,6 +56,7 @@ const handleLogin = async (req, res) => {
                 return res.status(200).json({ message: "token sent successful", token: token,
                 username: user.username, // Include the username in the response
                 role: user.role ,
+                id: user._id,
                 email:user.email,
                 phone: user.phone
             });
