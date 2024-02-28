@@ -23,12 +23,16 @@ const getDrivers = async (req, res) => {
 
 const StatusChanger = async (req, res) => {
     const requestId = req.body.requestId;
+    const comAssociate = req.body.comAssociate
 
     try {
         // Find the request by _id and update its status
         const updatedRequest = await Request.findOneAndUpdate(
             { _id: requestId },
-            { status: 'completed' },
+            { 
+                status: 'completed',
+                TakenBy: comAssociate // Update the takenBy field
+            },
             { new: true } // This option returns the updated document
         );
 
