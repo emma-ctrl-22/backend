@@ -29,7 +29,6 @@ const getAllRequests = async (req, res) => {
     } catch (err) {
         res.status(500).json(err);
     }
-
 }
 
 const PlasticRequest = async (req, res) => {
@@ -39,7 +38,6 @@ const PlasticRequest = async (req, res) => {
     } catch (err) {
         res.status(500).json(err);
     }
-
 };
 
 const PaperRequest = async (req, res) => {
