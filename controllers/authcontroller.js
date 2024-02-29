@@ -6,7 +6,10 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
+const { StreamChat } = require('stream-chat');
 dotenv.config();
+
+const streamClient = StreamChat.getInstance(process.env.STREAM_API_KEY, process.env.STREAM_API_SECRET);
 
 app.use(express.json())
 app.use(cookieParser())
@@ -53,13 +56,17 @@ const handleLogin = async (req, res) => {
         //});
         if(isValidPassword) {
             const token = jwt.sign({ username: user.username, phone: user.phone, role: user.role,}, process.env.JWT_SECRET, { expiresIn: "1d" });
+           
+            const streamToken = streamClient.createToken(user._id.toString());
+
             if(res.status(201)){
                 return res.status(200).json({ message: "token sent successful", token: token,
                 username: user.username, // Include the username in the response
                 role: user.role ,
                 id: user._id,
                 email:user.email,
-                phone: user.phone
+                phone: user.phone,
+                streamToken,
             });
             }else{
                 return res.status(403).json({ message: "error sending token" });
