@@ -39,8 +39,8 @@ const userSchema = new mongoose.Schema({
     },
     areaAssigned:{
         center: {
-            lat: { type: Number, default: null },
-            long: { type: Number, default: null }
+            lat: { type: Number,},
+            long: { type: Number }
         },
         radius: { type: Number, default: 1000 } // Default radius in meters
     }
