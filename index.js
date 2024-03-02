@@ -15,12 +15,12 @@ const {verifyUser} = require('./middleware/VerifyUser');
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({
-    origin:['http://localhost:3000','http://172.20.10.5:8081','http://172.20.10.6:3000'],
+    origin:['http://localhost:3000','http://172.20.10.5:8081','http://191.168.11.42:3000'],
     credentials : true
 } 
 ));
 
-mongoose.connect(process.env.MONGO_URL).then(console.log('Connected to MongoDB')).catch(err => console.log(err));
+mongoose.connect('mongodb+srv://emmanuelnyatepe35:tickle@tables.atgxdit.mongodb.net/?retryWrites=true&w=majority').then(console.log('Connected to MongoDB')).catch(err => console.log(err));
 
 app.use('/verifyuser',verifyUser, (req,res)=>{
     res.json({username: req.username, phone: req.phone, role: req.role, user_id: req.user_id});
@@ -55,6 +55,47 @@ app.post('/userData', async (req, res) => {
         
     }
    
+})
+
+app.post('/login', async (req,res)=>{
+    const { email, password } = req.body;
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(403).json({ message: "Invalid email or password" });
+        }
+
+        const isValidPassword = await bcrypt.compare(password, user.password);
+        if (!isValidPassword) {
+            return res.status(403).json({ message: "Invalid email or password" });
+        }
+        //res.status(200).json({
+        //username: user.username,
+            //_id: user._id,
+            // Include any other user info you want to send
+        //});
+        if(isValidPassword) {
+            const token = jwt.sign({ username: user.username, phone: user.phone, role: user.role,}, "the-jwt-secret-key", { expiresIn: "1d" });
+           
+            
+
+            if(res.status(201)){
+                return res.status(200).json({ message: "token sent successful", token: token,
+                username: user.username, // Include the username in the response
+                role: user.role ,
+                id: user._id,
+                email:user.email,
+                phone: user.phone,
+                
+                assignedArea
+            });
+            }else{
+                return res.status(403).json({ message: "error sending token" });
+            }
+        }
+    } catch (err) {
+        res.status(500).json({ message: "An error occurred" });
+    }
 })
 
 {/*app.post('/sepcific',async (req, res) => {

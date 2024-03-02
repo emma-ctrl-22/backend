@@ -26,14 +26,13 @@ const handleNewUser = async (req, res) => {
             phone: req.body.phone,
             role: req.body.role,
             comAssociate:req.body.comAssociate,
-            areaAssigned:req.body.areaAssigned
         });
 
         const user = await newUser.save();
         res.status(200).json(user);
     } catch (err) 
     {
-        res.status(500).json(err);
+        res.status(500).json('An error occurred in mongodb');
     }
 };
 
@@ -49,31 +48,22 @@ const handleLogin = async (req, res) => {
         if (!isValidPassword) {
             return res.status(403).json({ message: "Invalid email or password" });
         }
-        //res.status(200).json({
-        //username: user.username,
-            //_id: user._id,
-            // Include any other user info you want to send
-        //});
-        if(isValidPassword) {
-            const token = jwt.sign({ username: user.username, phone: user.phone, role: user.role,}, process.env.JWT_SECRET, { expiresIn: "1d" });
-           
-            const streamToken = streamClient.createToken(user._id.toString());
 
-            if(res.status(201)){
-                return res.status(200).json({ message: "token sent successful", token: token,
-                username: user.username, // Include the username in the response
-                role: user.role ,
-                id: user._id,
-                email:user.email,
-                phone: user.phone,
-                streamToken,
-            });
-            }else{
-                return res.status(403).json({ message: "error sending token" });
-            }
-        }
+        const token = jwt.sign({ username: user.username, phone: user.phone, role: user.role }, "the-jwt-secret-key", { expiresIn: "1d" });
+        
+        return res.status(200).json({
+            message: "Token sent successfully",
+            token: token,
+            username: user.username,
+            role: user.role,
+            id: user._id,
+            email: user.email,
+            phone: user.phone,
+        });
+
     } catch (err) {
-        res.status(500).json({ message: "An error occurred" });
+        console.error("Login error in backend catch block:", err); // Log the actual error
+        res.status(500).json({ message: "An error occurred catch block" });
     }
 };
 
