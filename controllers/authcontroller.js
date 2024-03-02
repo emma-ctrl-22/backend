@@ -51,6 +51,8 @@ const handleLogin = async (req, res) => {
 
         const token = jwt.sign({ username: user.username, phone: user.phone, role: user.role }, "the-jwt-secret-key", { expiresIn: "1d" });
         
+        const streamToken = streamClient.createToken(user._id.toString());
+
         return res.status(200).json({
             message: "Token sent successfully",
             token: token,
@@ -59,6 +61,7 @@ const handleLogin = async (req, res) => {
             id: user._id,
             email: user.email,
             phone: user.phone,
+            streamToken: streamToken,
         });
 
     } catch (err) {
