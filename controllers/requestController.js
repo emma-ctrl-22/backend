@@ -64,7 +64,35 @@ const History = async (req,res) =>{
     }
 }
 
+const AssignRequest = async (req, res) => {
+    try {
+        const { requestId, driverId } = req.body;
+
+        // Find the request by ID
+        const request = await Request.findById(requestId);
+     console.log(requestId,driverId);
+        // Check if the request exists
+        if (!request) {
+            return res.status(404).json({ message: 'Request not found' });
+        }
+
+        // Update the takenBy field with the driverId
+        request.TakenBy = driverId;
+
+        // Save the updated request
+        await request.save();
+
+        console.log(request);
+
+        // Return a success response
+        res.status(200).json({ message: 'Request assigned successfully', request });
+        
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+    }
+}
 
 
 
-module.exports = { createRequest, getAllRequests,History };
+module.exports = { createRequest, getAllRequests,History ,AssignRequest};
