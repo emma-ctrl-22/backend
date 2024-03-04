@@ -58,7 +58,7 @@ const getAllCompanies = async (req, res) => {
 const getAssignHauls = async (req,res) =>{
     const DriverName = req.body.DriverName;
     try {
-        const requests = await Request.find({ TakenBy: DdriverName});
+        const requests = await Request.find({ TakenBy: DriverName});
         res.status(200).json(requests);
     } catch (error) {
         res.status(500).json({ message: error.message });
