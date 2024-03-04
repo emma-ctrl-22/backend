@@ -55,5 +55,16 @@ const getAllCompanies = async (req, res) => {
     }
 };
 
+const getAssignHauls = async (req,res) =>{
+    const DriverName = req.body.DriverName;
+    try {
+        const requests = await Request.find({ TakenBy: DdriverName});
+        res.status(200).json(requests);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 
-module.exports = { getDrivers , StatusChanger,getAllCompanies };
+}
+
+
+module.exports = { getDrivers , StatusChanger,getAllCompanies,getAssignHauls };
