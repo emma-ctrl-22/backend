@@ -26,6 +26,8 @@ const handleNewUser = async (req, res) => {
             phone: req.body.phone,
             role: req.body.role,
             comAssociate:req.body.comAssociate,
+            lat:req.body.lat,
+            long:req.body.long
         });
 
         const user = await newUser.save();
