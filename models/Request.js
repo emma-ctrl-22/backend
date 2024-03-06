@@ -25,6 +25,9 @@ const requestSchema = new mongoose.Schema({
     }  ,
     author:{
         type:String
+    },
+    userId:{
+        type:String
     }
 },
 {timestamps: true}

@@ -11,7 +11,8 @@ const createRequest = async (req, res) => {
             status: req.body.status,
             lat: req.body.lat,
             long: req.body.long,
-            author:req.body.author
+            author:req.body.author,
+            userId: req.body.userId,
         });
 
         const request = await newRequest.save();
