@@ -14,13 +14,40 @@ const cookieParser = require('cookie-parser');
 const {verifyUser} = require('./middleware/VerifyUser');
 app.use(express.json());
 app.use(cookieParser())
-app.use(cors({
-    origin:['http://localhost:5173','http://172.20.10.5:8081','http://191.168.11.42:3000'],
-    credentials : true
-} 
-));
 
-mongoose.connect('mongodb+srv://emmanuelnyatepe35:tickle@tables.atgxdit.mongodb.net/?retryWrites=true&w=majority').then(console.log('Connected to MongoDB')).catch(err => console.log(err));
+// Updated CORS configuration
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://172.20.10.5:8081',
+  'http://191.168.11.42:3000',
+  // Add your Render frontend URL here when you deploy it
+  'https://ecohaul-frontend.onrender.com'
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (process.env.NODE_ENV === 'production') {
+      // In production, allow any origin
+      return callback(null, true);
+    } else {
+      // In development, check against allowed origins
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    }
+  },
+  credentials: true
+}));
+
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://emmanuelnyatepe35:tickle@tables.atgxdit.mongodb.net/?retryWrites=true&w=majority')
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.log('MongoDB connection error:', err));
 
 app.use('/verifyuser',verifyUser, (req,res)=>{
     res.json({username: req.username, phone: req.phone, role: req.role, user_id: req.user_id});
@@ -107,6 +134,11 @@ app.post('/login', async (req,res)=>{
         res.status(500).json({ message: err.message });
     }
 });*/}
+
+// Add a health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'Server is running' });
+});
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
