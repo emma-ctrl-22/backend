@@ -12,6 +12,9 @@ const driverRoute = require("./routes/api/drivers");
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const {verifyUser} = require('./middleware/VerifyUser');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 app.use(express.json());
 app.use(cookieParser())
 
