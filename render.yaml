@@ -3,11 +3,11 @@ services:
     name: ecohaul-backend
     env: node
     plan: free
-    buildCommand: npm install && npm rebuild bcrypt --build-from-source
+    buildCommand: npm ci
     startCommand: node index.js
     envVars:
       - key: NODE_VERSION
-        value: 16
+        value: 16.20.0
       - key: NODE_ENV
         value: production
       - key: MONGODB_URI

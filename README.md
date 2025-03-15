@@ -26,12 +26,12 @@ This is the backend API for the EcoHaul application, a platform for managing was
    - **Environment**: Node
    - **Region**: Choose the region closest to your users
    - **Branch**: main (or your preferred branch)
-   - **Build Command**: `npm install && npm rebuild bcrypt --build-from-source`
+   - **Build Command**: `npm ci`
    - **Start Command**: `node index.js`
    - **Plan**: Free
 
 4. Add the following environment variables:
-   - `NODE_VERSION`: 16
+   - `NODE_VERSION`: 16.20.0
    - `NODE_ENV`: production
    - `PORT`: 10000 (Render will automatically set this, but you can specify it)
    - `MONGODB_URI`: Your MongoDB connection string
@@ -41,16 +41,19 @@ This is the backend API for the EcoHaul application, a platform for managing was
 
 5. Click "Create Web Service"
 
-### Automatic Deployment with render.yaml
+### Troubleshooting Deployment Issues
 
-If you have the `render.yaml` file in your repository, you can use Render Blueprints:
+If you encounter issues with native modules like bcrypt:
 
-1. Go to the Render Dashboard
-2. Click on "Blueprints" in the sidebar
-3. Click "New Blueprint Instance"
-4. Connect your GitHub repository
-5. Render will automatically detect the `render.yaml` file and set up the services
-6. You'll need to manually add the secret environment variables
+1. Make sure you're using Node.js version 16.x (specified in package.json and .node-version)
+2. The .npmrc file should have the necessary settings for permissions
+3. Use `npm ci` instead of `npm install` for more reliable builds
+4. If bcrypt still causes issues, consider using a pure JavaScript alternative like bcryptjs:
+   ```
+   npm uninstall bcrypt
+   npm install bcryptjs
+   ```
+   Then update your code to use bcryptjs instead of bcrypt.
 
 ## API Endpoints
 

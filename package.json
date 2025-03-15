@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "npm ci"
+  },
+  "engines": {
+    "node": "16.x"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +18,7 @@
     "nodemon": "^3.0.3"
   },
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "date-fns": "^3.3.1",
